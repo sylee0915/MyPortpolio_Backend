@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 public class ProjectResponseDto {
-    private Long id;
+    private Long projectId;
     private String title;
     private String description;    // 프로젝트 개요
     private String period;         // 제작 기간
@@ -28,7 +28,7 @@ public class ProjectResponseDto {
 
     public static ProjectResponseDto from(Project project) {
         return ProjectResponseDto.builder()
-                .id(project.getProjectId())
+                .projectId(project.getProjectId())
                 .title(project.getTitle())
                 .description(project.getDescription())
                 .period(project.getPeriod())
