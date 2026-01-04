@@ -27,14 +27,20 @@ public class ProjectService {
                 .collect(Collectors.toList());
     }
 
+    // 단일 프로젝트 조회 (추가)
+    public ProjectResponseDto getProjectById(Long id) {
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("프로젝트를 찾을 수 없습니다. ID: " + id));
+        return ProjectResponseDto.from(project);
+    }
+
     // 새 프로젝트 저장 (관리자용)
     @Transactional
     public ProjectResponseDto saveProject(ProjectRequestDto requestDto) {
         // 1. 기술 스택 조회
         List<Skill> skills = skillRepository.findAllById(requestDto.getSkillIds());
 
-        // 2. Project 엔티티 생성 (Builder 패턴 권장)
-        // Note: Project 엔티티에 필드와 @Builder 또는 생성자가 추가되어 있어야 합니다.
+        // 2. Project 엔티티 생성
         Project project = Project.builder()
                 .title(requestDto.getTitle())
                 .description(requestDto.getDescription())

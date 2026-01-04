@@ -21,7 +21,13 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.getAllProjects());
     }
 
-    // 2. 새 프로젝트 등록 (관리자용)
+    // 2. 단일 프로젝트 상세 조회 (추가)
+    @GetMapping("/{id}")
+    public ResponseEntity<ProjectResponseDto> getProject(@PathVariable Long id) {
+        return ResponseEntity.ok(projectService.getProjectById(id));
+    }
+
+    // 3. 새 프로젝트 등록 (관리자용)
     @PostMapping("/admin")
     public ResponseEntity<ProjectResponseDto> createProject(@RequestBody ProjectRequestDto requestDto) {
         ProjectResponseDto savedProject = projectService.saveProject(requestDto);
