@@ -27,8 +27,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS 설정
                 .addFilterBefore(adminPasswordFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/projects/**", "/api/skills/**", "/api/contacts/**").permitAll() // 포트폴리오 데이터는 누구나 조회 가능
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN") // 권한 검사
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form.disable()); // 기본 로그인 창 비활성화
