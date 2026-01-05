@@ -59,4 +59,36 @@ public class ProjectService {
         Project savedProject = projectRepository.save(project);
         return ProjectResponseDto.from(savedProject);
     }
+
+    @Transactional
+    public ProjectResponseDto updateProject(Long id, ProjectRequestDto requestDto) {
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("프로젝트를 찾을 수 없습니다. ID: " + id));
+
+        List<Skill> skills = skillRepository.findAllById(requestDto.getSkillIds());
+
+        // 엔티티 필드 업데이트 (더티 체킹 활용)
+        project.update(
+                requestDto.getTitle(),
+                requestDto.getDescription(),
+                requestDto.getPeriod(),
+                requestDto.getTeamSize(),
+                requestDto.getContent(),
+                requestDto.getGithubUrl(),
+                requestDto.getDemoUrl(),
+                requestDto.getThumbnailUrl(),
+                requestDto.getErdImageUrl(),
+                requestDto.getArchitectureImageUrl(),
+                skills
+        );
+
+        return ProjectResponseDto.from(project);
+    }
+
+    @Transactional
+    public void deleteProject(Long id) {
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("프로젝트를 찾을 수 없습니다. ID: " + id));
+        projectRepository.delete(project);
+    }
 }

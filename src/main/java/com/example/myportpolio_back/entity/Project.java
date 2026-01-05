@@ -41,4 +41,20 @@ public class Project {
     )
     @Builder.Default
     private List<Skill> skills = new ArrayList<>();
+
+    public void update(String title, String description, String period, String teamSize,
+                       String content, String githubUrl, String demoUrl, String thumbnailUrl,
+                       String erdImageUrl, String architectureImageUrl, List<Skill> skills) {
+        this.title = title;
+        this.description = description;
+        this.period = period;
+        this.teamSize = teamSize;
+        this.content = content;
+        this.githubUrl = githubUrl;
+        this.demoUrl = demoUrl;
+        this.thumbnailUrl = thumbnailUrl;
+        this.erdImageUrl = erdImageUrl;
+        this.architectureImageUrl = architectureImageUrl;
+        this.skills = skills;
+    }
 }

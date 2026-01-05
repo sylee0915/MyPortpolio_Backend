@@ -16,7 +16,7 @@ public class Skill {
     private Long skillId;
 
     private String name;
-    private String category; // e.g., "Frontend", "Backend"
+    private String category;
     private String iconUrl;
 
     @Builder
