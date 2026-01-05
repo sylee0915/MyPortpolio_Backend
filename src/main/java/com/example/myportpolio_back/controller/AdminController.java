@@ -35,4 +35,15 @@ public class AdminController {
         siteConfigService.updateConfig(config);
         return ResponseEntity.ok("사이트 설정이 업데이트되었습니다.");
     }
+
+    @PutMapping("/projects/{id}")
+    public ResponseEntity<ProjectResponseDto> updateProject(@PathVariable Long id, @RequestBody ProjectRequestDto requestDto) {
+        return ResponseEntity.ok(projectService.updateProject(id, requestDto));
+    }
+
+    @DeleteMapping("/projects/{id}")
+    public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
+        projectService.deleteProject(id);
+        return ResponseEntity.noContent().build();
+    }
 }
