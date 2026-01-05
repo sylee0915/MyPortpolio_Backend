@@ -26,8 +26,8 @@ public class AdminPasswordFilter extends OncePerRequestFilter {
 
         String requestPassword = request.getHeader("X-Admin-Password");
 
-        if (adminPassword.equals(requestPassword)) {
-            // 비밀번호가 일치하면 'ADMIN' 권한을 가진 인증 객체를 컨텍스트에 저장
+        // 비밀번호 설정이 되어 있고, 요청 헤더와 일치하는지 확인 (null 체크 포함)
+        if (adminPassword != null && !adminPassword.isEmpty() && adminPassword.equals(requestPassword)) {
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                     "admin", null, Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")));
             SecurityContextHolder.getContext().setAuthentication(auth);

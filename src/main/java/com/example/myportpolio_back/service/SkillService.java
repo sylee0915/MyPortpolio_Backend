@@ -3,7 +3,6 @@ package com.example.myportpolio_back.service;
 import com.example.myportpolio_back.dto.SkillResponseDto;
 import com.example.myportpolio_back.entity.Skill;
 import com.example.myportpolio_back.repository.SkillRepository;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 public class SkillService {
     private final SkillRepository skillRepository;
 
-    @PostConstruct
+    // 초기 데이터 로딩을 위한 별도 메서드
     @Transactional
     public void initDefaultSkills() {
         if (skillRepository.count() == 0) {
@@ -34,18 +33,12 @@ public class SkillService {
         }
     }
 
-    /**
-     * 모든 기술 스택 조회 (DTO 반환 컨벤션 준수)
-     */
     public List<SkillResponseDto> getAllSkills() {
         return skillRepository.findAll().stream()
                 .map(SkillResponseDto::from)
                 .collect(Collectors.toList());
     }
 
-    /**
-     * 관리자용: 새로운 기술 스택 추가
-     */
     @Transactional
     public SkillResponseDto addSkill(String name, String category) {
         Skill skill = Skill.builder()
@@ -55,9 +48,6 @@ public class SkillService {
         return SkillResponseDto.from(skillRepository.save(skill));
     }
 
-    /**
-     * 관리자용: 기술 스택 삭제
-     */
     @Transactional
     public void deleteSkill(Long id) {
         if (!skillRepository.existsById(id)) {
