@@ -2,9 +2,13 @@ package com.example.myportpolio_back.controller;
 
 import com.example.myportpolio_back.dto.ProjectRequestDto;
 import com.example.myportpolio_back.dto.ProjectResponseDto;
+import com.example.myportpolio_back.dto.SkillResponseDto;
 import com.example.myportpolio_back.entity.SiteConfig;
 import com.example.myportpolio_back.service.ProjectService;
 import com.example.myportpolio_back.service.SiteConfigService;
+import com.example.myportpolio_back.service.SkillService;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
     private final ProjectService projectService;
     private final SiteConfigService siteConfigService;
+    private final SkillService skillService;
 
     // 1. 관리자 비밀번호 검증용 API (신규 제안)
     // AdminPasswordFilter를 통과하면 인증된 것으로 간주함
@@ -45,5 +50,28 @@ public class AdminController {
     public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
         projectService.deleteProject(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // 4. 기술 스택 관리 (SkillService의 DTO 기반 로직 적용)
+    @PostMapping("/skills")
+    public ResponseEntity<SkillResponseDto> addSkill(@RequestBody SkillAddRequest request) {
+        // SkillService에서 제안한 addSkill(name, category) 호출
+        return ResponseEntity.ok(skillService.addSkill(request.getName(), request.getCategory()));
+    }
+
+    @DeleteMapping("/skills/{id}")
+    public ResponseEntity<Void> deleteSkill(@PathVariable Long id) {
+        skillService.deleteSkill(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * 기술 스택 추가를 위한 내부 DTO
+     */
+    @Getter
+    @NoArgsConstructor
+    static class SkillAddRequest {
+        private String name;
+        private String category;
     }
 }
