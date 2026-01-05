@@ -1,13 +1,11 @@
 package com.example.myportpolio_back.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
+@Setter // 추가: 데이터 바인딩을 위해 필요
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
